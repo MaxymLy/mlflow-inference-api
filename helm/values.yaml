@@ -12,7 +12,7 @@ service:
   targetPort: 8080
 
 env:
-  MLFLOW_TRACKING_URI: <http://mlflow.application.svc.cluster.local:5000>
+  MLFLOW_TRACKING_URI: <http://local:5000>
   MODEL_NAME: iris_rf_model
   MODEL_STAGE: Production
 

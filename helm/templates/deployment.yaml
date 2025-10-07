@@ -19,6 +19,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: {{ .Values.service.targetPort }}
+          imagePullSecrets:
+            - name: ecr-secret
           envFrom:
             - secretRef:
                 name: mlflow-secrets

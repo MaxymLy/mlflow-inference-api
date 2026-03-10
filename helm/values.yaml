@@ -5,16 +5,28 @@ image:
   tag: latest
   pullPolicy: IfNotPresent
 
+
+env:
+  MLFLOW_TRACKING_URI: http://mlflow.mlflow.svc.cluster.local:5000
+  MODEL_NAME: iris_rf_model
+  MODEL_STAGE: Production
+
 service:
   name: inference-api
   type: ClusterIP
   port: 4545
   targetPort: 8080
+  
+livenessProbe:
+  httpGet:
+    path: /docs
+    port: 8080
+  initialDelaySeconds: 15
+  periodSeconds: 20
 
-env:
-  MODEL_NAME: iris_rf_model
-  MODEL_STAGE: Production
-
-extraEnvFrom:
-  - secretRef:
-      name: mlflow-secrets
+readinessProbe:
+  httpGet:
+    path: /docs
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 15
